@@ -29,3 +29,11 @@ C:\Users\Надюша\Desktop\Exel_3.0\Exel_3.0\obj\Debug\Exel_3.0.csproj.Genera
 E:\Надя\Exel_3.0\Exel_3.0 (2)\Exel_3.0\Exel_3.0\bin\Debug\Exel_3.0.exe.config
 E:\Надя\Exel_3.0\Exel_3.0 (2)\Exel_3.0\Exel_3.0\obj\Debug\Exel_3.0.exe
 E:\Надя\Exel_3.0\Exel_3.0 (2)\Exel_3.0\Exel_3.0\obj\Debug\Exel_3.0.pdb
+E:\GIT\Exel_3.0\Exel_3.0\bin\Debug\Exel_3.0.exe.config
+E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3.0.exe
+E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3.0.pdb
+E:\GIT\Exel_3.0\Exel_3.0\bin\Debug\Exel_3.0.exe
+E:\GIT\Exel_3.0\Exel_3.0\bin\Debug\Exel_3.0.pdb
+E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3._0.MainMenu.resources
+E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3._0.Properties.Resources.resources
+E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3.0.csproj.GenerateResource.Cache

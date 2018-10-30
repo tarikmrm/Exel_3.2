@@ -19,7 +19,7 @@ namespace Exel_3._0
         private const int height_correct = 30;       //відступи по висоті
         private const int alphabet = 65;
         private const int number_of_letters = 26;
-        private const int start_number = 2;         //кількість початкових стовпчиків/рядків
+        private const int start_number = 5;         //кількість початкових стовпчиків/рядків
         public int col = 0;
         public string[,] massFormulas; //масив формул в парсер
         public MainMenu()
@@ -35,13 +35,13 @@ namespace Exel_3._0
 
         private void FillingMass()
         {
-            massFormulas = new string[dataGridView1.ColumnCount, dataGridView1.RowCount];
-            for (int i = 0; i < dataGridView1.ColumnCount; i++)
+            massFormulas = new string[dgFormula.ColumnCount, dgFormula.RowCount];
+            for (int i = 0; i < dgFormula.ColumnCount; i++)
             {
-                for (int j = 0; j < dataGridView1.RowCount; j++)
+                for (int j = 0; j < dgFormula.RowCount; j++)
                 {
-                    if (dataGridView1[i, j].Value != null)
-                        massFormulas[i, j] = dataGridView1[i, j].Value.ToString();
+                    if (dgFormula[i, j].Value != null)
+                        massFormulas[i, j] = dgFormula[i, j].Value.ToString();
                 }
             }
         }
@@ -52,9 +52,9 @@ namespace Exel_3._0
 
         public string Formulas(int i, int j)
         {
-            if (dataGridView1[i, j].Value != null)
+            if (dgFormula[i, j].Value != null)
             {
-                string s = dataGridView1[0, 0].Value.ToString();
+                string s = dgFormula[0, 0].Value.ToString();
                 return s;
             }
             else
@@ -64,12 +64,12 @@ namespace Exel_3._0
         private void AddColumn()
         {
             int temp = 0;
-            dataGridView2.ColumnCount++;
-            temp = dataGridView1.ColumnCount++;
-            dataGridView1.Columns[temp].HeaderText = Convert.ToString(temp + 1);
-            dataGridView1.Columns[temp].Width = width_size;
-            dataGridView2.Columns[temp].HeaderText = Convert.ToString(temp + 1);
-            dataGridView2.Columns[temp].Width = width_size;
+            dgValue.ColumnCount++;
+            temp = dgFormula.ColumnCount++;
+            dgFormula.Columns[temp].HeaderText = Convert.ToString(temp + 1);
+            dgFormula.Columns[temp].Width = width_size;
+            dgValue.Columns[temp].HeaderText = Convert.ToString(temp + 1);
+            dgValue.Columns[temp].Width = width_size;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -80,16 +80,16 @@ namespace Exel_3._0
         private void AddRow()
         {
             int temp = 0;
-            if ((dataGridView1.RowCount == 0) && (dataGridView1.ColumnCount == 0))
+            if ((dgFormula.RowCount == 0) && (dgFormula.ColumnCount == 0))
             {
                 AddColumn();
             }
-            dataGridView2.RowCount++;
-            temp = dataGridView1.RowCount++;
+            dgValue.RowCount++;
+            temp = dgFormula.RowCount++;
             if (temp < number_of_letters)
             {
-                dataGridView1.Rows[temp].HeaderCell.Value = Convert.ToString((char)(temp + alphabet));
-                dataGridView2.Rows[temp].HeaderCell.Value = Convert.ToString((char)(temp + alphabet));
+                dgFormula.Rows[temp].HeaderCell.Value = Convert.ToString((char)(temp + alphabet));
+                dgValue.Rows[temp].HeaderCell.Value = Convert.ToString((char)(temp + alphabet));
             }
             else
                 if (temp < (number_of_letters * (number_of_letters + 1)))
@@ -99,8 +99,8 @@ namespace Exel_3._0
                     string s;
                     s = Convert.ToString((char)(firstT + alphabet));
                     s += Convert.ToString((char)(secondT + alphabet));
-                    dataGridView1.Rows[temp].HeaderCell.Value = s;
-                    dataGridView2.Rows[temp].HeaderCell.Value = s;
+                    dgFormula.Rows[temp].HeaderCell.Value = s;
+                    dgValue.Rows[temp].HeaderCell.Value = s;
                 }
                 else
                     if (temp < (number_of_letters * (number_of_letters * (number_of_letters + 1) + 1)))
@@ -113,12 +113,12 @@ namespace Exel_3._0
                         s = Convert.ToString((char)(firstT + alphabet));
                         s += Convert.ToString((char)(secondT + alphabet));
                         s += Convert.ToString((char)(thirdT + alphabet));
-                        dataGridView1.Rows[temp].HeaderCell.Value = s;
-                        dataGridView2.Rows[temp].HeaderCell.Value = s;
+                        dgFormula.Rows[temp].HeaderCell.Value = s;
+                        dgValue.Rows[temp].HeaderCell.Value = s;
                     }
                     else
                     {
-                        dataGridView1.RowCount--; dataGridView2.RowCount--;
+                        dgFormula.RowCount--; dgValue.RowCount--;
                     }
         }
         private void button3_Click(object sender, EventArgs e)
@@ -128,39 +128,39 @@ namespace Exel_3._0
 
         void ChangeSide()
         {
-            for (int j = 0; j < dataGridView2.RowCount; j++)
+            for (int j = 0; j < dgValue.RowCount; j++)
             {
-                for (int i = 0; i < dataGridView2.ColumnCount; i++)
+                for (int i = 0; i < dgValue.ColumnCount; i++)
                 {
-                    if (dataGridView1[i, j].Value == null)
+                    if (dgFormula[i, j].Value == null)
                     {
-                        dataGridView1[i, j].Value = dataGridView2[i, j].Value;
-                        dataGridView1[i, j].Value = "0";
+                        dgFormula[i, j].Value = dgValue[i, j].Value;
+                        //dgFormula[i, j].Value = "0";
                     }
                 }
             }
             Recalculation();
-            dataGridView2.Width = dataGridView1.Width;
-            dataGridView2.Height = dataGridView1.Height;
-            dataGridView1.Visible = false;
-            dataGridView2.Visible = true;
+            dgValue.Width = dgFormula.Width;
+            dgValue.Height = dgFormula.Height;
+            dgFormula.Visible = false;
+            dgValue.Visible = true;
         }
 
         private void Recalculation()
         {
             FillingMass();
-            for (int j = 0; j < dataGridView1.RowCount; j++)
+            for (int j = 0; j < dgFormula.RowCount; j++)
             {
-                for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                for (int i = 0; i < dgFormula.ColumnCount; i++)
                 {
-                    if (dataGridView1[i, j].Value != null)
+                    if (dgFormula[i, j].Value != null)
                     {
-                        int ColumnCount = dataGridView1.ColumnCount;
-                        int RowCount = dataGridView2.RowCount;
+                        int ColumnCount = dgFormula.ColumnCount;
+                        int RowCount = dgValue.RowCount;
                         Parser a = new Parser(massFormulas, ColumnCount, RowCount);
-                        string s = dataGridView1[i, j].Value.ToString();
-                        double rez = a.Evaluate(s);
-                        dataGridView2[i, j].Value = Convert.ToString(rez);
+                        string s = dgFormula[i, j].Value.ToString();
+                        string rez = a.StartEvaluate(s);
+                        dgValue[i, j].Value = rez;
                     }
                 }
             }
@@ -173,8 +173,8 @@ namespace Exel_3._0
         {
             int delta_width = 0;
             int delta_height = 0;
-            dataGridView1.Location = new Point(coordinates, coordinates);
-            dataGridView2.Location = new Point(coordinates, coordinates);
+            dgFormula.Location = new Point(coordinates, coordinates);
+            dgValue.Location = new Point(coordinates, coordinates);
             delta_width = -button1.Width - width_size / 2;
             delta_height = -button1.Height - button2.Height - height_correct;
             button1.Location = new Point(this.Size.Width + delta_width, this.Size.Height + delta_height);
@@ -186,21 +186,21 @@ namespace Exel_3._0
             button5.Location = new Point(this.Size.Width + delta_width, this.Size.Height + delta_height);
             delta_width -= button3.Width;
             button3.Location = new Point(this.Size.Width + delta_width, this.Size.Height + delta_height);
-            dataGridView1.Width = this.Size.Width - width_size - coordinates;
-            dataGridView1.Height = this.Size.Height - 3 * height_correct - coordinates;
-            dataGridView2.Width = this.Size.Width - width_size - coordinates;
-            dataGridView2.Height = this.Size.Height - 3 * height_correct - coordinates;
+            dgFormula.Width = this.Size.Width - width_size - coordinates;
+            dgFormula.Height = this.Size.Height - 3 * height_correct - coordinates;
+            dgValue.Width = this.Size.Width - width_size - coordinates;
+            dgValue.Height = this.Size.Height - 3 * height_correct - coordinates;
         }
         private void Ntab(int ColumnC, int RowC, string[,] mass)
         {
-            dataGridView1.ColumnCount = 0;
-            dataGridView2.ColumnCount = 0;
+            dgFormula.ColumnCount = 0;
+            dgValue.ColumnCount = 0;
             for (int i = 0; i < ColumnC; i++)
             {
                 AddColumn();
             }
-            dataGridView1.RowCount = 0;
-            dataGridView2.RowCount = 0;
+            dgFormula.RowCount = 0;
+            dgValue.RowCount = 0;
             for (int i = 0; i < RowC; i++)
             {
                 AddRow();
@@ -209,7 +209,7 @@ namespace Exel_3._0
             {
                 for (int j = 0; j < RowC; j++)
                 {
-                    dataGridView1[i, j].Value = mass[i, j];
+                    dgFormula[i, j].Value = mass[i, j];
                 }
             }
             ChangeSide();
@@ -283,14 +283,14 @@ namespace Exel_3._0
                 if (sfd.ShowDialog() == DialogResult.Cancel)
                     return;
                 StreamWriter sw = new StreamWriter(sfd.FileName);
-                sw.WriteLine(dataGridView1.ColumnCount);
-                sw.WriteLine(dataGridView1.RowCount);
-                for (int i = 0; i < dataGridView1.ColumnCount; i++)
+                sw.WriteLine(dgFormula.ColumnCount);
+                sw.WriteLine(dgFormula.RowCount);
+                for (int i = 0; i < dgFormula.ColumnCount; i++)
                 {
-                    for (int j = 0; j < dataGridView1.RowCount; j++)
+                    for (int j = 0; j < dgFormula.RowCount; j++)
                     {
-                        if (dataGridView1[i, j].Value != null)
-                            sw.WriteLine(Convert.ToString(dataGridView1[i, j].Value));
+                        if (dgFormula[i, j].Value != null)
+                            sw.WriteLine(Convert.ToString(dgFormula[i, j].Value));
                     }
                 }
                 MessageBox.Show("Файл успішно збережено");
@@ -307,16 +307,16 @@ namespace Exel_3._0
         }
         private void DeleteCount()
         {
-            if (dataGridView1.ColumnCount > 0)
+            if (dgFormula.ColumnCount > 0)
             {
-                int k = dataGridView2.CurrentCell.ColumnIndex;
-                for (int i = dataGridView2.ColumnCount - 1; i > k; i--)
+                int k = dgValue.CurrentCell.ColumnIndex;
+                for (int i = dgValue.ColumnCount - 1; i > k; i--)
                 {
-                    dataGridView1.Columns[i].HeaderText = dataGridView1.Columns[i - 1].HeaderText;
-                    dataGridView2.Columns[i].HeaderText = dataGridView2.Columns[i - 1].HeaderText;
+                    dgFormula.Columns[i].HeaderText = dgFormula.Columns[i - 1].HeaderText;
+                    dgValue.Columns[i].HeaderText = dgValue.Columns[i - 1].HeaderText;
                 }
-                dataGridView1.Columns.RemoveAt(k);
-                dataGridView2.Columns.RemoveAt(k);
+                dgFormula.Columns.RemoveAt(k);
+                dgValue.Columns.RemoveAt(k);
             }
             ChangeSide();
         }
@@ -326,42 +326,42 @@ namespace Exel_3._0
         }
         private void DeleteRow()
         {
-            if (dataGridView1.RowCount > 0)
+            if (dgFormula.RowCount > 0)
             {
-                int k = dataGridView2.CurrentRow.Index;
-                for (int i = dataGridView2.RowCount - 1; i > k; i--)
+                int k = dgValue.CurrentRow.Index;
+                for (int i = dgValue.RowCount - 1; i > k; i--)
                 {
-                    dataGridView1.Rows[i].HeaderCell.Value = dataGridView1.Rows[i - 1].HeaderCell.Value;
-                    dataGridView2.Rows[i].HeaderCell.Value = dataGridView2.Rows[i - 1].HeaderCell.Value;
+                    dgFormula.Rows[i].HeaderCell.Value = dgFormula.Rows[i - 1].HeaderCell.Value;
+                    dgValue.Rows[i].HeaderCell.Value = dgValue.Rows[i - 1].HeaderCell.Value;
                 }
-                dataGridView1.Rows.RemoveAt(k);
-                dataGridView2.Rows.RemoveAt(k);
+                dgFormula.Rows.RemoveAt(k);
+                dgValue.Rows.RemoveAt(k);
 
             }
-            if (dataGridView1.RowCount == 0)
+            if (dgFormula.RowCount == 0)
             {
-                dataGridView1.ColumnCount = 0;
-                dataGridView2.ColumnCount = 0;
+                dgFormula.ColumnCount = 0;
+                dgValue.ColumnCount = 0;
             }
             ChangeSide();
         }
-        private void dataGridView2_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void dgValue_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (e.ColumnIndex != -1 && e.RowIndex != -1)
             {
-                var a = dataGridView1[e.ColumnIndex, e.RowIndex].Value;
+                var a = dgFormula[e.ColumnIndex, e.RowIndex].Value;
                 if (a != null)
                     textBox1.Text = a.ToString();
             }
         }
-        private void dataGridView2_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
+        private void dgValue_CellBeginEdit(object sender, DataGridViewCellCancelEventArgs e)
         {
-            dataGridView2[e.ColumnIndex, e.RowIndex].Value = dataGridView1[e.ColumnIndex, e.RowIndex].Value;
+            dgValue[e.ColumnIndex, e.RowIndex].Value = dgFormula[e.ColumnIndex, e.RowIndex].Value;
         }
 
-        private void dataGridView2_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        private void dgValue_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
-            dataGridView1[e.ColumnIndex, e.RowIndex].Value = dataGridView2[e.ColumnIndex, e.RowIndex].Value;
+            dgFormula[e.ColumnIndex, e.RowIndex].Value = dgValue[e.ColumnIndex, e.RowIndex].Value;
             ChangeSide();
         }
     }

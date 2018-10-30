@@ -78,7 +78,7 @@ namespace Exel_3._0
         {
             tokType = Types.NONE;
             token = "";
-            if (expIdx == exp.Length) 
+            if (exp == null || expIdx == exp.Length) 
                 return; /*кінець виразу*/
             // пропускаємо пробіл
             while (expIdx < exp.Length && Char.IsWhiteSpace(exp[expIdx])) ++expIdx;
@@ -118,19 +118,19 @@ namespace Exel_3._0
         {
             for (int i = 0; i < token.Length; i++) expIdx--;
         }
-        //public double StartEvaluate(string expstr)
-        //{
-        //    double result;
-        //    try
-        //    {
-        //        result = Evaluate(expstr);
-        //        return result;
-        //    }
-        //    catch
-        //    {
-        //        return 0.0;
-        //    }
-        //}
+        public string StartEvaluate(string expstr)
+        {
+            double result;
+            try
+            {
+                result = Evaluate(expstr);
+                return result.ToString();
+            }
+            catch
+            {
+                return "error";
+            }
+        }
         /* Точка входу аналізатора. */
         public double Evaluate(string expstr)
         {
@@ -141,12 +141,12 @@ namespace Exel_3._0
             GetToken();
             if (token == "")
             {
-                SyntaxErr(Errors.NOEXP); // Вираз відсутній
+                //SyntaxErr(Errors.NOEXP); // Вираз відсутній
                 return 0.0;
             }
             EvalExp2(out result);
-            if (token != "") /* остання лексема повинна бути нульова */
-                SyntaxErr(Errors.SYNTAX);
+            //if (token != "") /* остання лексема повинна бути нульова */
+            //    SyntaxErr(Errors.SYNTAX);
             return result;
         }
         // Повертаємо значення змінної
@@ -159,7 +159,7 @@ namespace Exel_3._0
             {
                 Show a = new Show();
                 a.INCORRECT();
-                SyntaxErr(Errors.SYNTAX);
+                //SyntaxErr(Errors.SYNTAX);
                 return 0.0;
             }
             int i = 0;
@@ -180,14 +180,14 @@ namespace Exel_3._0
             {
                 Show a = new Show();
                 a.INCORRECT();
-                SyntaxErr(Errors.SYNTAX);
+                //SyntaxErr(Errors.SYNTAX);
                 return 0.0;
             }
             if (numbers == "")
             {
                 Show a = new Show();
                 a.INCORRECT();
-                SyntaxErr(Errors.SYNTAX);
+                //SyntaxErr(Errors.SYNTAX);
                 return 0.0;
             }
             tokencolumn = Convert.ToInt32(numbers);
@@ -195,7 +195,7 @@ namespace Exel_3._0
             {
                 Show a = new Show();
                 a.INCORRECT();
-                SyntaxErr(Errors.SYNTAX);
+                //SyntaxErr(Errors.SYNTAX);
                 return 0.0;
             }
             i = letters.Length;
@@ -210,7 +210,7 @@ namespace Exel_3._0
             {
                 Show a = new Show();
                 a.INCORRECT();
-                SyntaxErr(Errors.SYNTAX);
+                //SyntaxErr(Errors.SYNTAX);
                 return 0.0;
             }
             if (control[tokencolumn - 1, tokenrow - 1])
@@ -354,7 +354,7 @@ namespace Exel_3._0
                     Show a = new Show();
                     a.INCORRECT();
                     result = 0;
-                    SyntaxErr(Errors.SYNTAX);
+                    //SyntaxErr(Errors.SYNTAX);
                 }
                 else
                 {
@@ -389,8 +389,8 @@ namespace Exel_3._0
             {
                 GetToken();
                 EvalExp2(out result);
-                if (token != ")")
-                    SyntaxErr(Errors.UNBALPARENS);
+                //if (token != ")")
+                //    SyntaxErr(Errors.UNBALPARENS);
                 GetToken();
             }
             else
@@ -409,7 +409,7 @@ namespace Exel_3._0
                     catch (FormatException)
                     {
                         result = 0.0;
-                        SyntaxErr(Errors.SYNTAX);
+                        //SyntaxErr(Errors.SYNTAX);
                     }
                     GetToken();
                     return;
@@ -419,13 +419,13 @@ namespace Exel_3._0
                     return;
                 default:
                     result = 0.0;
-                    SyntaxErr(Errors.SYNTAX);
+                    //SyntaxErr(Errors.SYNTAX);
                     break;
             }
         }//Atom
         void SyntaxErr(Errors e)
         {
-            //throw new Exception(e.ToString());
+            throw new Exception(e.ToString());
         }
     }
 }

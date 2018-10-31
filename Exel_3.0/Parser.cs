@@ -145,8 +145,8 @@ namespace Exel_3._0
                 return 0.0;
             }
             EvalExp2(out result);
-            //if (token != "") /* остання лексема повинна бути нульова */
-            //    SyntaxErr(Errors.SYNTAX);
+            if (token != "") /* остання лексема повинна бути нульова */
+                SyntaxErr(Errors.SYNTAX);
             return result;
         }
         // Повертаємо значення змінної
@@ -349,23 +349,24 @@ namespace Exel_3._0
                 GetToken();
                 EvalExp4(out partialResult);
                 ex = result;
-                if (partialResult < 0.0)
-                {
-                    Show a = new Show();
-                    a.INCORRECT();
-                    result = 0;
-                    //SyntaxErr(Errors.SYNTAX);
-                }
-                else
-                {
-                    if (partialResult == 0.0)
-                    {
-                        result = 1.0;
-                        return;
-                    }
-                    for (t = (int)partialResult - 1; t > 0; t--)
-                        result = result * (double)ex;
-                }
+                result = Math.Pow(result,partialResult );
+                //if (partialResult < 0.0)
+                //{
+                //    Show a = new Show();
+                //    a.INCORRECT();
+                //    result = 0;
+                //    //SyntaxErr(Errors.SYNTAX);
+                //}
+                //else
+                //{
+                //    if (partialResult == 0.0)
+                //    {
+                //        result = 1.0;
+                //        return;
+                //    }
+                //    for (t = (int)partialResult - 1; t > 0; t--)
+                //        result = result * (double)ex;
+                //}
             }
         }
         // Множення унарних операторів + й -. 
@@ -389,8 +390,8 @@ namespace Exel_3._0
             {
                 GetToken();
                 EvalExp2(out result);
-                //if (token != ")")
-                //    SyntaxErr(Errors.UNBALPARENS);
+                if (token != ")")
+                    SyntaxErr(Errors.UNBALPARENS);
                 GetToken();
             }
             else

@@ -37,3 +37,4 @@ E:\GIT\Exel_3.0\Exel_3.0\bin\Debug\Exel_3.0.pdb
 E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3._0.MainMenu.resources
 E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3._0.Properties.Resources.resources
 E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3.0.csproj.GenerateResource.Cache
+E:\GIT\Exel_3.0\Exel_3.0\obj\Debug\Exel_3.0.csprojResolveAssemblyReference.cache
